@@ -92,3 +92,43 @@
   }
   #stage.intro-view.source-view .story-card.intro-panel mark{color:#a9def1!important}
 }
+
+
+/* Galaxy S24+ portrait frame: full photo first, its explanation in a separate reading panel. */
+@media(max-width:800px) and (orientation:portrait){
+  #stage.intro-view.source-view .daily-life-background{
+    inset:0 0 auto!important;
+    height:min(calc(100vw * 2 / 3),38svh)!important;
+    max-height:none!important;overflow:hidden;background:#e8edf1;
+  }
+  #stage.intro-view.source-view .daily-life-background img{
+    display:block;width:100%;height:100%;
+    object-fit:contain!important;object-position:center!important;
+    opacity:1;filter:grayscale(.18);
+  }
+  #stage.intro-view.source-view .daily-life-background:after{display:none}
+  #stage.intro-view.source-view .story-card.intro-panel{
+    inset:calc(min(100vw * 2 / 3,38svh) + 12px) 14px calc(env(safe-area-inset-bottom,0px) + clamp(82px,10svh,108px))!important;
+    width:auto;max-width:none;height:auto;max-height:none;overflow-y:auto;
+    display:flex;flex-direction:column;justify-content:center;align-items:stretch;
+    padding:18px clamp(16px,4.4vw,22px)!important;
+    background:#f8fafc!important;color:#18222d!important;
+    border:1px solid #dce3e9!important;border-radius:4px;
+    box-shadow:0 8px 24px #15243912!important;
+    text-shadow:none!important;transform:none!important;
+  }
+  #stage.intro-view.source-view .story-card.intro-panel .intro-copy,
+  #stage.intro-view.source-view .story-card.intro-panel .intro-copy p,
+  #stage.intro-view.source-view .story-card.intro-panel .source-narration{
+    color:#18222d!important;text-shadow:none!important;
+    font-size:clamp(17px,4.6vw,19px)!important;
+    line-height:1.62!important;letter-spacing:-.02em;
+  }
+  #stage.intro-view.source-view .story-card.intro-panel mark{
+    color:#176578!important;background:transparent!important;
+  }
+  #stage.intro-view.source-view>.ai{
+    top:10px;right:10px;z-index:5;
+    background:#ffffffdf;color:#35414c;
+  }
+}
