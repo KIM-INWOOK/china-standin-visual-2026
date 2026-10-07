@@ -241,3 +241,20 @@
     z-index:3;
   }
 }
+
+
+/* Preserve the dark closing scene; lock the final question to white at its end state. */
+@media(max-width:800px){
+  html.has-closing-motion .closing.question-locked .closing-question{
+    opacity:1!important;
+    transform:none!important;
+  }
+  html.has-closing-motion .closing.question-locked .closing-question span{
+    background:none!important;
+    background-image:none!important;
+    background-clip:border-box!important;
+    -webkit-background-clip:border-box!important;
+    color:#f4f4f0!important;
+    -webkit-text-fill-color:#f4f4f0!important;
+  }
+}
