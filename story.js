@@ -27,96 +27,28 @@ if(!reduced){const entranceObserver=new IntersectionObserver(entries=>{for(const
 
 
 /* Mobile story autoplay: each image and paragraph gets a reading pause; user input pauses it. */
-(()=>{
-  const mobile=matchMedia('(max-width:800px)');
-  if(!mobile.matches)return;
-  const prefersLessMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const pauseButton=document.createElement('button');
-  pauseButton.type='button';
-  pauseButton.className='mobile-autoplay-toggle';
-  pauseButton.setAttribute('aria-live','polite');
-  document.body.appendChild(pauseButton);
 
-  const beats=[];
-  const readingTime=text=>Math.max(5.5,Math.min(13,3.5+(String(text||'').length/19)));
-  const addStep=(step,part,text,seconds)=>{
-    if(step)beats.push({getTop:()=>{const r=step.getBoundingClientRect();return window.scrollY+r.top+r.height*part-innerHeight*.48;},hold:seconds||readingTime(text)});
-  };
-  const addElement=(element,topRatio,text,seconds)=>{
-    if(element)beats.push({getTop:()=>{const r=element.getBoundingClientRect();return window.scrollY+r.top-innerHeight*topRatio;},hold:seconds||readingTime(text)});
-  };
+/* Mobile readers get a natural, continuous page with no text over the artwork. */
+if(matchMedia('(max-width:800px)').matches){
+  const flow=document.createElement('div');
+  flow.className='mobile-flow';
+  flow.id='mobile-flow';
 
-  const openingTexts=[
-    '대행 경제의 이야기 시작',
-    window.BRIDGE.split('\\n').slice(0,2).join(' '),
-    window.BRIDGE.split('\\n').slice(2).join(' '),
-    window.SCMP_INTRO.split(' 매체는 ')[0],
-    window.SCMP_INTRO.split(' 매체는 ')[1],
-    '기사를 참고해 가상 인물의 상황을 재연해봤습니다.',
-    ''
-  ];
-  [0,1,2,3,4,5,6].forEach((n,i)=>addStep(steps[n],.42,openingTexts[i],i===0?4.5:undefined));
-
-  const caseSteps=steps.filter(step=>step.classList.contains('case-step'));
-  caseSteps.forEach((step,i)=>{
-    const concern=window.CONCERNS[i]||'';
-    const intro=window.INTROS[i]?.[1]||'';
-    const detail=cases[i]?.desc||'';
-    addStep(step,.16,concern,readingTime(concern));
-    addStep(step,.47,intro,readingTime(intro));
-    addStep(step,.79,detail,readingTime(detail));
-    const next=steps[steps.indexOf(step)+1];
-    if(next?.classList.contains('crowd-step'))addStep(next,.5,'',2.2);
-  });
-
-  const endingScenes=[...document.querySelectorAll('.mobile-ending-scene')];
-  endingScenes.forEach(scene=>{
-    const copy=scene.querySelector('.ending-card');
-    const art=scene.querySelector('.mobile-ending-image');
-    addElement(copy,.14,copy?.innerText||'');
-    addElement(art,.12,'',4.5);
-  });
-
-  const closing=$('#closing');
-  if(closing)beats.push({getTop:()=>{const travel=Math.max(1,closing.offsetHeight-innerHeight);return window.scrollY+closing.getBoundingClientRect().top+travel*.78;},hold:12});
-
-  let index=0,timer=null,running=false,finished=false;
-  const label=()=>{pauseButton.textContent=running?'자동 진행 중 · 멈춤':finished?'처음부터 다시 보기':'이어서 보기';pauseButton.setAttribute('aria-pressed',String(running));};
-  const pause=()=>{
-    running=false;
-    clearTimeout(timer);
-    timer=null;
-    label();
-  };
-  const advance=()=>{
-    if(!running)return;
-    if(index>=beats.length){running=false;finished=true;label();return;}
-    const beat=beats[index++];
-    const top=Math.max(0,Math.min(document.documentElement.scrollHeight-innerHeight,beat.getTop()));
-    window.scrollTo({top,behavior:prefersLessMotion?'auto':'smooth'});
-    timer=setTimeout(()=>{if(running)timer=setTimeout(advance,beat.hold*1000);},850);
-  };
-  const start=()=>{
-    if(finished){index=0;finished=false;window.scrollTo({top:0,behavior:prefersLessMotion?'auto':'smooth'});}
-    running=true;
-    label();
-    timer=setTimeout(advance,650);
-  };
-  pauseButton.addEventListener('click',event=>{
-    event.preventDefault();
-    event.stopPropagation();
-    if(running)pause();else start();
-  });
-  const interrupt=event=>{
-    if(event.target===pauseButton||pauseButton.contains(event.target))return;
-    if(running)pause();
-  };
-  document.addEventListener('touchstart',interrupt,{passive:true});
-  document.addEventListener('wheel',interrupt,{passive:true});
-  document.addEventListener('keydown',event=>{
-    if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(event.key))interrupt(event);
-  });
-  document.addEventListener('visibilitychange',()=>{if(document.hidden&&running)pause();});
-  label();
-  if(!prefersLessMotion)timer=setTimeout(start,1400);
-})();
+  const bridge=window.BRIDGE.split('\\n').map(line=>'<p>'+esc(line)+'</p>').join('');
+  const hero='<section class="mobile-flow-section mobile-flow-opening"><figure class="mobile-flow-art"><img src="assets/crosswalk-backs.png" alt="중국 도시 횡단보도의 사람들"></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">중국 대행 경제</span>'+bridge+'</div></section>';
+  const source='<section class="mobile-flow-section mobile-flow-source"><figure class="mobile-flow-art"><img src="assets/busy-daily-life.png" alt="바쁜 일상을 보내는 사람들"></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">왜 대행 서비스가 늘어날까</span><p>'+esc(window.SCMP_INTRO)+'</p><p class="mobile-flow-note">SCMP 보도를 바탕으로 대행 서비스를 살펴봅니다.</p></div></section>';
+  const assets=['meal','trash','lego','debate','care'];
+  const caseMarkup=cases.map((item,i)=>{
+    const paragraphs=(window.CONCERNS[i]?'<blockquote>'+esc(window.CONCERNS[i])+'</blockquote>':'')+
+      '<p>'+esc(window.INTROS[i]?.[1]||'')+'</p>'+
+      '<p>'+esc(item.desc||'')+'</p>'+
+      (item.extra?'<p class="mobile-flow-note">'+esc(item.extra)+'</p>':'');
+    const price=item.price?'<p class="mobile-flow-price">'+esc(item.price)+(item.won?' · '+esc(item.won):'')+'</p>':'';
+    return '<article class="mobile-flow-section mobile-flow-case"><figure class="mobile-flow-art"><img src="assets/case-'+assets[i]+'.png" alt="'+esc(item.name)+' 대행 서비스 장면"></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">'+String(i+1).padStart(2,'0')+' / 05</span><h2>'+esc(item.name)+'</h2>'+price+paragraphs+'</div></article>';
+  }).join('');
+  flow.innerHTML=hero+source+caseMarkup;
+  const main=document.querySelector('main');
+  main.insertBefore(flow,main.firstChild);
+  const oldStory=document.querySelector('.scroll-story');
+  if(oldStory)oldStory.hidden=true;
+}
