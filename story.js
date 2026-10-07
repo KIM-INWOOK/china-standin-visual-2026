@@ -24,3 +24,99 @@ $('#case-art-image').addEventListener('load',schedule);update();
 
 // One entrance per visible block; content stays readable without animation.
 if(!reduced){const entranceObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('flow-arriving');entranceObserver.unobserve(entry.target);}},{threshold:.12});for(const node of document.querySelectorAll('.mobile-ending-scene .ending-card,.mobile-ending-image,.closing h1'))entranceObserver.observe(node);}
+
+
+/* Mobile story autoplay: each image and paragraph gets a reading pause; user input pauses it. */
+(()=>{
+  const mobile=matchMedia('(max-width:800px)');
+  if(!mobile.matches)return;
+  const prefersLessMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pauseButton=document.createElement('button');
+  pauseButton.type='button';
+  pauseButton.className='mobile-autoplay-toggle';
+  pauseButton.setAttribute('aria-live','polite');
+  document.body.appendChild(pauseButton);
+
+  const beats=[];
+  const readingTime=text=>Math.max(5.5,Math.min(13,3.5+(String(text||'').length/19)));
+  const addStep=(step,part,text,seconds)=>{
+    if(step)beats.push({getTop:()=>{const r=step.getBoundingClientRect();return window.scrollY+r.top+r.height*part-innerHeight*.48;},hold:seconds||readingTime(text)});
+  };
+  const addElement=(element,topRatio,text,seconds)=>{
+    if(element)beats.push({getTop:()=>{const r=element.getBoundingClientRect();return window.scrollY+r.top-innerHeight*topRatio;},hold:seconds||readingTime(text)});
+  };
+
+  const openingTexts=[
+    '대행 경제의 이야기 시작',
+    window.BRIDGE.split('\\n').slice(0,2).join(' '),
+    window.BRIDGE.split('\\n').slice(2).join(' '),
+    window.SCMP_INTRO.split(' 매체는 ')[0],
+    window.SCMP_INTRO.split(' 매체는 ')[1],
+    '기사를 참고해 가상 인물의 상황을 재연해봤습니다.',
+    ''
+  ];
+  [0,1,2,3,4,5,6].forEach((n,i)=>addStep(steps[n],.42,openingTexts[i],i===0?4.5:undefined));
+
+  const caseSteps=steps.filter(step=>step.classList.contains('case-step'));
+  caseSteps.forEach((step,i)=>{
+    const concern=window.CONCERNS[i]||'';
+    const intro=window.INTROS[i]?.[1]||'';
+    const detail=cases[i]?.desc||'';
+    addStep(step,.16,concern,readingTime(concern));
+    addStep(step,.47,intro,readingTime(intro));
+    addStep(step,.79,detail,readingTime(detail));
+    const next=steps[steps.indexOf(step)+1];
+    if(next?.classList.contains('crowd-step'))addStep(next,.5,'',2.2);
+  });
+
+  const endingScenes=[...document.querySelectorAll('.mobile-ending-scene')];
+  endingScenes.forEach(scene=>{
+    const copy=scene.querySelector('.ending-card');
+    const art=scene.querySelector('.mobile-ending-image');
+    addElement(copy,.14,copy?.innerText||'');
+    addElement(art,.12,'',4.5);
+  });
+
+  const closing=$('#closing');
+  if(closing)beats.push({getTop:()=>{const travel=Math.max(1,closing.offsetHeight-innerHeight);return window.scrollY+closing.getBoundingClientRect().top+travel*.78;},hold:12});
+
+  let index=0,timer=null,running=false,finished=false;
+  const label=()=>{pauseButton.textContent=running?'자동 진행 중 · 멈춤':finished?'처음부터 다시 보기':'이어서 보기';pauseButton.setAttribute('aria-pressed',String(running));};
+  const pause=()=>{
+    running=false;
+    clearTimeout(timer);
+    timer=null;
+    label();
+  };
+  const advance=()=>{
+    if(!running)return;
+    if(index>=beats.length){running=false;finished=true;label();return;}
+    const beat=beats[index++];
+    const top=Math.max(0,Math.min(document.documentElement.scrollHeight-innerHeight,beat.getTop()));
+    window.scrollTo({top,behavior:prefersLessMotion?'auto':'smooth'});
+    timer=setTimeout(()=>{if(running)timer=setTimeout(advance,beat.hold*1000);},850);
+  };
+  const start=()=>{
+    if(finished){index=0;finished=false;window.scrollTo({top:0,behavior:prefersLessMotion?'auto':'smooth'});}
+    running=true;
+    label();
+    timer=setTimeout(advance,650);
+  };
+  pauseButton.addEventListener('click',event=>{
+    event.preventDefault();
+    event.stopPropagation();
+    if(running)pause();else start();
+  });
+  const interrupt=event=>{
+    if(event.target===pauseButton||pauseButton.contains(event.target))return;
+    if(running)pause();
+  };
+  document.addEventListener('touchstart',interrupt,{passive:true});
+  document.addEventListener('wheel',interrupt,{passive:true});
+  document.addEventListener('keydown',event=>{
+    if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(event.key))interrupt(event);
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&running)pause();});
+  label();
+  if(!prefersLessMotion)timer=setTimeout(start,1400);
+})();
