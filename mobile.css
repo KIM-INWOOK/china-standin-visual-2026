@@ -34,7 +34,7 @@
   .ending-stage>.ending-card{position:absolute;left:18px;right:18px;bottom:60px;width:auto;padding:18px;background:#fffffff0;z-index:2}
   .ending-stage>.ai{z-index:3}
   .ending-stage .ending-dots{z-index:3}
-  .ending-stage[data-compact="true"][data-ending="2"] .ending-art svg{transform:translateY(-50px)}
+  .ending-stage[data-compact="true"][data-ending="2"] .ending-art svg{transform:translateY(-75px)}
   .closing{padding:0;max-width:none}
   html.has-closing-motion .closing-stage,.closing-stage{height:var(--mobile-stage-height,100svh);min-height:0;padding:38px 24px 76px;grid-template-rows:auto 1fr;align-items:center}
   .closing-stage>.closing-question{align-self:center;margin:0;font-size:clamp(34px,9vw,48px);line-height:1.3}
