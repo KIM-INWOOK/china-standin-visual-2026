@@ -122,3 +122,30 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
 .chore-lane span:nth-child(5n+2){font-size:clamp(11px,1vw,15px);font-weight:400;letter-spacing:-.015em;opacity:.55}
 .chore-lane span:nth-child(4n+3){font-size:clamp(20px,2.25vw,32px);font-weight:600;opacity:.85}
 @media(max-width:800px){.chore-lane span:nth-child(7n+1){font-size:clamp(19px,5.8vw,27px)}.chore-lane span:nth-child(5n+2){font-size:11px}.chore-lane span:nth-child(4n+3){font-size:clamp(16px,4.4vw,21px)}}
+
+
+/* Mobile reading position: keep pinned-story copy high and fully visible. */
+@media(max-width:800px){
+  .story-card.intro-panel{
+    max-height:calc(100svh - 24px);
+    overflow:visible;
+  }
+  .intro-panel .intro-copy{
+    transform:none!important;
+    opacity:1!important;
+    will-change:auto;
+  }
+  .story-card.bridge-card{
+    justify-content:flex-start;
+    padding:clamp(44px,8svh,100px) 24px 24px;
+  }
+  .source-view .story-card.context-card{
+    inset:calc(min(100vw * 2 / 3,35svh) + 12px) 14px 16px;
+    justify-content:flex-start;
+    padding:18px 20px 24px;
+  }
+  .source-view .intro-copy,.source-view .intro-copy p{
+    font-size:clamp(18px,5.1vw,21px);
+    line-height:1.68;
+  }
+}
