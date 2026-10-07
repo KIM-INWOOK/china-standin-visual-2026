@@ -225,3 +225,16 @@
   .ending-stage{grid-template-rows:minmax(0,min(36svh,230px)) minmax(0,1fr)!important}
   .ending-stage>.ending-card{padding:10px 14px 14px!important}
 }
+
+/* Introduction copy begins below Asia Economy's mobile masthead. */
+@media(max-width:800px) and (orientation:portrait){
+  #stage[data-scene="-3"] #story-card,
+  #stage[data-scene="-6"] #story-card{
+    top:calc(env(safe-area-inset-top,0px) + 96px)!important;
+    bottom:auto!important;
+  }
+  #stage[data-scene="-3"] #story-card .intro-copy,
+  #stage[data-scene="-6"] #story-card .intro-copy{
+    padding-top:10px;
+  }
+}
