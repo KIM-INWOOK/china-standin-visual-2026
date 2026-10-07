@@ -263,3 +263,18 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
   .mobile-ending-scene .ending-card blockquote{font-size:20px;line-height:1.75}
 }
 @media(prefers-reduced-motion:reduce){.mobile-flow *{scroll-behavior:auto}}
+
+/* Keep the scroll interaction while separating copy from faces and artwork. */
+@media(max-width:800px){
+  .mobile-flow-art{overflow:hidden}
+  .mobile-flow-art img{filter:grayscale(1);transform:scale(1.025);transition:filter .9s ease,transform 1.1s cubic-bezier(.2,.65,.2,1)}
+  .mobile-flow-section.is-active .mobile-flow-art img{filter:grayscale(0);transform:scale(1)}
+  .mobile-flow-copy>*{opacity:.82;transform:translateY(10px);transition:opacity .55s ease,transform .65s ease}
+  .mobile-flow-copy>*.is-visible{opacity:1;transform:translateY(0)}
+  .mobile-flow-section.is-active .mobile-flow-kicker{color:#36566f}
+  .mobile-ending-scene .mobile-ending-image{filter:grayscale(1);transition:filter .9s ease}
+  .mobile-ending-scene.is-active .mobile-ending-image{filter:grayscale(0)}
+}
+@media(prefers-reduced-motion:reduce){
+  .mobile-flow-art img,.mobile-flow-copy>*,.mobile-ending-scene .mobile-ending-image{transition:none;transform:none;opacity:1}
+}
