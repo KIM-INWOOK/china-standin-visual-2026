@@ -5,7 +5,7 @@
 ## 파일
 - index.html: 기사와 장면 구성
 - style.css: PC / 모바일 레이아웃, 무료 MaruBuri 폰트, 인터랙션
-- story.js: 스크롤 장면 제어와 장면 전환
+- story.js: 기사 장면·마지막 질문의 스크롤 전환
 - assets/: 전체 이미지·폰트·라이선스
 - worker/index.js, db/, drizzle/: 이전 의견 저장 API와 데이터베이스 자료. 현재 페이지에서는 사용하지 않습니다.
 - article-embed.txt: 기사입력기용 한 줄 iframe 코드. 실제 CMS 삽입 후 높이와 스크롤 확인이 필요합니다.
