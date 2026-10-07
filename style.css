@@ -235,3 +235,31 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
 @media(max-width:800px) and (max-height:680px){
   #stage[data-scene="0"] #story-card,#stage[data-scene="1"] #story-card,#stage[data-scene="2"] #story-card,#stage[data-scene="3"] #story-card,#stage[data-scene="4"] #story-card{top:7svh;max-height:39svh}
 }
+
+/* Mobile story flows like a complete article: artwork first, readable copy after. */
+.mobile-flow{display:none}
+@media(max-width:800px){
+  .mobile-flow{display:block;background:#edf1f5;color:#202832}
+  .mobile-flow-section{padding:0 0 44px;margin:0 0 30px;border-bottom:1px solid #d7dde4}
+  .mobile-flow-art{width:min(100%,760px);min-height:200px;margin:0 auto;background:#e4e9ef;display:flex;align-items:center;justify-content:center;padding:10px 12px}
+  .mobile-flow-art img{display:block;width:100%;height:auto;max-height:68svh;object-fit:contain;object-position:center}
+  .mobile-flow-copy{width:min(100%,700px);margin:0 auto;padding:24px 24px 6px;text-align:left;overflow-wrap:anywhere}
+  .mobile-flow-kicker{display:block;margin:0 0 14px;color:#697789;font:600 12px/1.5 Pretendard,Arial,sans-serif;letter-spacing:.08em}
+  .mobile-flow-copy p{font-size:17px;line-height:1.82;margin:0 0 16px}
+  .mobile-flow-opening .mobile-flow-copy p{font-size:21px;line-height:1.7;margin:0 0 10px}
+  .mobile-flow-copy h2{font-size:28px;line-height:1.35;text-align:center;margin:0 0 10px}
+  .mobile-flow-copy blockquote{margin:18px 0;padding:0 0 0 16px;border-left:2px solid #8796a6;font-size:20px;line-height:1.65}
+  .mobile-flow-price{font-size:16px!important;font-weight:600;text-align:center;color:#314c66}
+  .mobile-flow-note{font-size:13px!important;color:#697789}
+  .mobile-flow-case{padding-bottom:38px}
+  .mobile-flow-case .mobile-flow-art{min-height:240px}
+  .scroll-story[hidden]{display:none!important}
+  .ending-stage,.ending-steps{display:none!important}
+  .ending-mobile{display:block}
+  .mobile-ending-scene{display:flex;flex-direction:column;padding:0 0 56px;margin:0 0 30px;border-bottom:1px solid #d7dde4;overflow:visible}
+  .mobile-ending-scene .ending-card{order:0;width:min(100%,700px);padding:30px 24px 20px;margin:0 auto}
+  .mobile-ending-scene .mobile-ending-image{order:1;display:block;width:min(100%,760px);height:auto;max-height:none;aspect-ratio:1/2;margin:0 auto;overflow:visible}
+  .mobile-ending-scene .ending-card p{font-size:17px;line-height:1.82;margin:0 0 18px}
+  .mobile-ending-scene .ending-card blockquote{font-size:20px;line-height:1.75}
+}
+@media(prefers-reduced-motion:reduce){.mobile-flow *{scroll-behavior:auto}}
