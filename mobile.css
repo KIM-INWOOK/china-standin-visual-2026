@@ -266,3 +266,15 @@
     overflow:visible!important;
   }
 }
+
+
+/* Keep the source artwork and its narration together below Asia Economy's fixed mobile header. */
+@media(max-width:800px) and (orientation:portrait){
+  #stage.intro-view.source-view .daily-life-background{
+    inset:auto 0 auto!important;
+    top:calc(env(safe-area-inset-top,0px) + 96px)!important;
+  }
+  #stage.intro-view.source-view .story-card.intro-panel{
+    top:calc(env(safe-area-inset-top,0px) + 96px + min(100vw * 2 / 3,38svh) + 12px)!important;
+  }
+}
