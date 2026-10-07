@@ -277,3 +277,44 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
   .ending-stage>.ending-card p{font-size:13px;line-height:1.45}
 }
 @media(prefers-reduced-motion:reduce){.story-stage,.image-plane,.color-image,.person-mark,.case-art,.ending-art{scroll-behavior:auto;transition-duration:0.01ms!important}}
+
+
+/* Mobile reading frame: move every overlay up and keep the browser toolbar clear. */
+@media(max-width:800px){
+  #stage[data-scene="0"] #story-card,#stage[data-scene="1"] #story-card,#stage[data-scene="2"] #story-card,#stage[data-scene="3"] #story-card,#stage[data-scene="4"] #story-card{
+    top:calc(env(safe-area-inset-top,0px) + 4svh);
+    max-height:none;
+  }
+  .story-card.bridge-card,.story-card.context-card,.story-card.intro-panel{
+    left:16px;right:16px;top:calc(env(safe-area-inset-top,0px) + 5svh);bottom:auto;
+    width:auto;max-width:none;height:auto;max-height:none;margin:0;padding:22px 18px;
+    display:flex;flex-direction:column;justify-content:flex-start;overflow:visible;
+    transform:none;
+  }
+  .bridge-list.intro-copy{font-size:clamp(23px,6.4vw,29px);line-height:1.58;margin:0}
+  .bridge-statement.intro-copy{font-size:clamp(27px,7.2vw,34px);line-height:1.48}
+  .source-narration.intro-copy,.intro-panel .intro-copy,.intro-panel .intro-copy p{
+    font-size:clamp(20px,5.6vw,25px);line-height:1.62;
+  }
+  .reenactment-note{font-size:clamp(24px,6.8vw,29px);line-height:1.5}
+  .reference-note{margin-top:14px}
+  .ending-stage{
+    height:80svh;height:80dvh;min-height:0;
+    display:flex!important;flex-direction:column;justify-content:flex-start;overflow:hidden;
+  }
+  .ending-art{height:24svh;flex:0 0 24svh}
+  .ending-stage>.ending-card{flex:1;min-height:0;overflow:hidden;padding:8px 18px 12px}
+  .ending-stage>.ending-card p{font-size:clamp(13px,3.7vw,15px);line-height:1.48;margin:0 0 9px}
+  .ending-stage>.ending-card blockquote{font-size:clamp(16px,4.4vw,18px);line-height:1.48;margin:8px 0 0}
+  .ending-dots{bottom:20svh}
+  .closing{padding:34px 22px calc(22svh + env(safe-area-inset-bottom,0px))}
+  .closing h1{font-size:clamp(34px,9vw,50px);line-height:1.18}
+}
+@media(max-width:800px) and (max-height:680px){
+  .story-card.bridge-card,.story-card.context-card,.story-card.intro-panel{top:4svh;padding:15px 16px}
+  .bridge-list.intro-copy{font-size:22px}
+  .bridge-statement.intro-copy{font-size:26px}
+  .source-narration.intro-copy,.intro-panel .intro-copy,.intro-panel .intro-copy p{font-size:19px;line-height:1.5}
+  .ending-stage{height:78svh;height:78dvh}
+  .ending-art{height:21svh;flex-basis:21svh}
+}
