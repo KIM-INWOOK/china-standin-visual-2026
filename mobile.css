@@ -207,3 +207,21 @@
     bottom:calc(env(safe-area-inset-bottom,0px) + 16px)!important;
   }
 }
+
+/* Keep ending copy close to its illustration and start the reading at the card top. */
+@media(max-width:800px) and (orientation:portrait){
+  .ending-stage{
+    grid-template-rows:minmax(0,min(38svh,260px)) minmax(0,1fr)!important;
+    row-gap:8px!important;
+  }
+  .ending-stage>.ending-card{
+    justify-content:flex-start!important;
+    align-content:flex-start;
+    padding:12px 16px 16px!important;
+    margin-top:0!important;
+  }
+}
+@media(max-width:800px) and (orientation:portrait) and (max-height:700px){
+  .ending-stage{grid-template-rows:minmax(0,min(36svh,230px)) minmax(0,1fr)!important}
+  .ending-stage>.ending-card{padding:10px 14px 14px!important}
+}
