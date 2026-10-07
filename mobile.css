@@ -171,3 +171,73 @@
     top:calc(env(safe-area-inset-top,0px) + 96px + min(100vw * 2 / 3,38svh) + 12px)!important;
   }
 }
+
+
+/* Mobile ending: keep image and copy in document flow so the host's bottom bar cannot cover text. */
+@media(max-width:800px){
+  .ending-stage,
+  .ending-steps{
+    display:none!important;
+  }
+  .ending-mobile{
+    display:block!important;
+    position:relative;
+    padding:0;
+    overflow:visible!important;
+  }
+  .mobile-ending-scene{
+    display:flex!important;
+    position:relative;
+    flex-direction:column;
+    min-height:0;
+    padding:0 0 24px;
+    overflow:visible!important;
+    border-top:1px solid #d5dce5;
+  }
+  .mobile-ending-scene:first-child{
+    border-top:0;
+  }
+  .mobile-ending-scene .mobile-ending-image{
+    order:0;
+    display:block;
+    position:relative;
+    width:100%;
+    height:auto;
+    max-height:none;
+    aspect-ratio:1 / 1.72;
+    object-fit:contain;
+    overflow:visible;
+    background:#e4e9ef;
+  }
+  .mobile-ending-scene .ending-card{
+    order:1;
+    position:relative;
+    inset:auto;
+    width:auto;
+    max-width:680px;
+    margin:0 auto;
+    padding:24px 24px 28px;
+    overflow:visible!important;
+    background:#edf1f5;
+  }
+  .mobile-ending-scene .ending-card p{
+    margin:0 0 18px;
+    font-size:clamp(17px,4.7vw,19px);
+    line-height:1.72;
+    overflow-wrap:break-word;
+    word-break:keep-all;
+  }
+  .mobile-ending-scene .ending-card blockquote{
+    margin:14px 0 0;
+    font-size:clamp(19px,5vw,22px);
+    line-height:1.7;
+    overflow-wrap:break-word;
+    word-break:keep-all;
+  }
+  .mobile-ending-scene .ai{
+    top:12px;
+    right:12px;
+    bottom:auto;
+    z-index:3;
+  }
+}
