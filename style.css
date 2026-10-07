@@ -364,3 +364,27 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
   #stage[data-scene="0"] #story-card .narration,#stage[data-scene="1"] #story-card .narration,#stage[data-scene="2"] #story-card .narration,#stage[data-scene="3"] #story-card .narration,#stage[data-scene="4"] #story-card .narration{font-size:15px;line-height:1.48}
   .story-card.bridge-card,.story-card.context-card,.story-card.intro-panel{top:calc(env(safe-area-inset-top,0px) + 44px)}
 }
+
+
+/* High contrast opening on mobile: no pale copy on a white card, no scroll fade. */
+@media(max-width:800px){
+  #stage.intro-view .story-card.intro-panel{
+    background:transparent!important;border:0!important;box-shadow:none!important;
+    color:#f7f6f2!important;text-shadow:0 2px 12px #0009;
+  }
+  #stage.intro-view .story-card.intro-panel .intro-copy,
+  #stage.intro-view .story-card.intro-panel .intro-copy p{
+    color:#f7f6f2!important;opacity:1!important;transform:none!important;filter:none!important;
+  }
+  #stage.intro-view .story-card.intro-panel mark{
+    color:#a9def1!important;background:transparent!important;
+  }
+  #stage.intro-view.source-view .story-card.intro-panel{
+    top:calc(env(safe-area-inset-top,0px) + max(50px,7svh));
+    padding:14px 4px;
+  }
+  #stage.intro-view.source-view .story-card.intro-panel .source-narration,
+  #stage.intro-view.source-view .story-card.intro-panel .source-narration.intro-copy{
+    font-size:clamp(18px,4.8vw,21px);line-height:1.58;letter-spacing:-.02em;
+  }
+}
