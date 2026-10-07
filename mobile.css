@@ -208,22 +208,37 @@
   }
 }
 
-/* Keep ending copy close to its illustration and start the reading at the card top. */
+/* Pair the full portrait artwork with a compact, readable copy card on mobile. */
 @media(max-width:800px) and (orientation:portrait){
   .ending-stage{
-    grid-template-rows:minmax(0,min(38svh,260px)) minmax(0,1fr)!important;
-    row-gap:8px!important;
+    grid-template-rows:minmax(0,min(40svh,430px)) max-content!important;
+    align-content:start!important;
+    row-gap:14px!important;
   }
   .ending-stage>.ending-card{
+    width:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    align-self:start;
     justify-content:flex-start!important;
     align-content:flex-start;
-    padding:12px 16px 16px!important;
-    margin-top:0!important;
+    margin:0 16px!important;
+    padding:22px 20px 24px!important;
+  }
+  .ending-stage>.ending-card p{
+    font-size:clamp(19px,5vw,21px)!important;
+    line-height:1.62!important;
+    margin-bottom:12px!important;
+  }
+  .ending-stage>.ending-card blockquote{
+    font-size:clamp(19px,5vw,21px)!important;
+    line-height:1.58!important;
+    margin-top:12px!important;
   }
 }
 @media(max-width:800px) and (orientation:portrait) and (max-height:700px){
-  .ending-stage{grid-template-rows:minmax(0,min(36svh,230px)) minmax(0,1fr)!important}
-  .ending-stage>.ending-card{padding:10px 14px 14px!important}
+  .ending-stage{grid-template-rows:minmax(0,min(38svh,320px)) max-content!important}
+  .ending-stage>.ending-card{padding:18px 16px 20px!important}
 }
 
 /* Introduction copy begins below Asia Economy's mobile masthead. */
