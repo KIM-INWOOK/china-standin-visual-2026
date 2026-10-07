@@ -23,7 +23,7 @@
   .ending-stage>.ending-card{flex:0 0 auto;overflow:visible;padding:0;width:100%;max-width:none}
   .ending-stage>.ending-card p{font-size:18px;line-height:1.65;margin:0 0 14px;word-break:keep-all;overflow-wrap:break-word}
   .ending-stage>.ending-card p:last-child{margin-bottom:0}
-  .ending-stage>.ending-card blockquote{font-size:20px;line-height:1.65;margin:12px 0 0;padding-left:14px;word-break:keep-all;overflow-wrap:break-word}
+  .ending-stage>.ending-card blockquote{font-size:19px;line-height:1.6;margin:12px 0 0;padding-left:14px;word-break:keep-all;overflow-wrap:break-word}
   .ending-stage[data-ending="1"] .ending-art{order:1}
   .ending-stage[data-ending="1"] .ending-card{order:0}
   .ending-dots{bottom:28px}
