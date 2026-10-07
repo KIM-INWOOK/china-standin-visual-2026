@@ -2,7 +2,7 @@ const $=s=>document.querySelector(s),{cases,paragraphs}=window.NEWS,steps=[...do
 window.SCMP_INTRO="지난 4일 홍콩 사우스차이나모닝포스트(SCMP)에 따르면 중국 젊은층을 중심으로 이 같은 '대행 경제(stand-in economy)'가 확산하고 있습니다. 매체는 \"시간에 쫓기는 소비자들이 일상적인 업무를 직접 처리할 시간이나 인내심, 전문성이 부족해 편의를 위해 기꺼이 비용을 지불하면서 관련 서비스가 인기를 얻고 있다\"고 설명했는데요.";
 const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function focus(i,phase=0){if(i===current&&phase===currentPhase)return;const changed=i!==current;if(changed&&i>=0){$('#case-art-image').src='assets/case-'+sceneAssets[i]+'.png';$('#case-art-image').alt=cases[i].name+' 대행 사례를 횡단보도 속 인물의 외형에 맞춰 재구성한 AI 연출 장면';}current=i;currentPhase=phase;$('#stage').dataset.scene=i;if(changed){$('#stage').classList.remove('scene-arriving');void $('#stage').offsetWidth;$('#stage').classList.add('scene-arriving');}const card=$('#story-card'),plane=$('#plane'),color=$('#color');card.hidden=i<0&&![-3,-6,-4,-7,-5].includes(i);card.classList.toggle('bridge-card',i===-3||i===-6);$('#stage').classList.toggle('bridge-view',[-3,-6,-4,-7,-5].includes(i));card.classList.toggle('context-card',i===-4||i===-7||i===-5);$('#stage').classList.toggle('quiet-view',i<0);$('#stage').classList.toggle('source-view',i===-4||i===-7);$('#stage').classList.toggle('intro-view',[-3,-6,-4,-7].includes(i));card.classList.toggle('intro-panel',[-3,-6,-4,-7].includes(i));if(i===-3)card.innerHTML='<p class="bridge-list intro-copy">'+esc(window.BRIDGE.split('\n').slice(0,2).join('\n'))+'</p>';if(i===-6)card.innerHTML='<p class="bridge-statement intro-copy">'+esc(window.BRIDGE.split('\n').slice(2).join('\n')).replace('돈만 내면 대신해주는 대행업','<mark>돈만 내면 대신해주는 대행업</mark>')+'</p>';if(i===-4)card.innerHTML='<p class="source-narration intro-copy">'+esc(window.SCMP_INTRO.split(' 매체는 ')[0])+'</p>';if(i===-7)card.innerHTML='<div class="intro-copy"><p class="source-narration">매체는 '+esc(window.SCMP_INTRO.split(' 매체는 ')[1])+'</p></div>';if(i===-5)card.innerHTML='<p class="reenactment-note">기사를 참고해 가상 인물의 상황을 재연해봤습니다.</p><p class="reference-note">SCMP 보도 · 아시아경제 허미담 기자의 10월 6일 기사 참고</p>';plane.classList.toggle('focused',i>=0);color.classList.toggle('active',i>=0);if(i>=0){const c=cases[i],intro=window.INTROS[i];plane.style.setProperty('--x',c.x+'%');plane.style.setProperty('--y',c.y+'%');color.style.setProperty('--x',c.x+'%');color.style.setProperty('--y',c.y+'%');card.innerHTML=phase===0?`<h2 class="thought">${esc('"'+window.CONCERNS[i]+'"')}</h2>`:`<p class="narration">${esc(phase===2?c.desc:intro[1])}</p>`;card.classList.remove('entering');void card.offsetWidth;card.classList.add('entering')}layout()}
-function layout(){const stage=$('#stage'),w=stage.clientWidth,h=stage.clientHeight,mobile=w<=800,scale=Math.max(w/1536,h/1024),iw=1536*scale,ih=1024*scale;if(mobile){$('#case-art').style.height=Math.max(140,h-$('#story-card').offsetHeight-52)+'px'}else{$('#case-art').style.height='';}$('#plane').style.width=iw+'px';$('#plane').style.height=ih+'px';let z=1,x=(w-iw)/2,y=(h-ih)/2;if(current>=0){const c=cases[current];z=mobile?1.15:2;x=w*(mobile?.5:.32)-iw*c.x/100*z;y=h*(mobile?.27:.5)-ih*c.y/100*z}$('#plane').style.transform=`translate(${x}px,${y}px) scale(${z})`}
+function layout(){const stage=$('#stage'),w=stage.clientWidth,h=stage.clientHeight,mobile=w<=800,scale=Math.max(w/1536,h/1024),iw=1536*scale,ih=1024*scale,art=$('#case-art');if(mobile&&current>=0){const card=$('#story-card'),artTop=Math.max(0,card.getBoundingClientRect().bottom-stage.getBoundingClientRect().top+12),artHeight=Math.max(120,h-artTop-20);art.style.setProperty('top',artTop+'px','important');art.style.setProperty('height',artHeight+'px','important')}else{art.style.removeProperty('top');art.style.removeProperty('height')}$('#plane').style.width=iw+'px';$('#plane').style.height=ih+'px';let z=1,x=(w-iw)/2,y=(h-ih)/2;if(current>=0){const c=cases[current];z=2;x=w*(mobile?.5:.32)-iw*c.x/100*z;y=h*(mobile?.70:.5)-ih*c.y/100*z}$('#plane').style.transform=`translate(${x}px,${y}px) scale(${z})`}
 function update(){pending=false;updateEnding();updateClosing();const target=innerHeight*.48;let active=steps[0];for(const step of steps){if(step.getBoundingClientRect().top<=target)active=step;else break}const rect=active.getBoundingClientRect(),part=(target-rect.top)/rect.height;const scene=Number(active.dataset.scene);focus(scene,scene<0?0:part>.62?2:part>.30?1:0);const dailyColor=scene===-4?Math.max(0,Math.min(1,part/.5)):scene===-7?1-Math.max(0,Math.min(1,part/.5)):0;$('#stage').style.setProperty('--daily-color',String(dailyColor));const wash=Math.max(0,Math.min(1,part/.72));$('#stage').style.setProperty('--source-wash',String(wash*wash*(3-2*wash)));$('#stage').classList.toggle('source-quote-view',scene===-7);if([-3,-6,-4,-7].includes(scene)){const enter=Math.max(0,Math.min(1,part/.18)),leave=Math.max(0,Math.min(1,(part-.82)/.18));$('#story-card').style.setProperty('--intro-y',reduced?'0px':((1-enter)-leave)*Math.min(140,innerHeight*.2)+'px');$('#story-card').style.setProperty('--intro-alpha',reduced?'1':String(Math.min(enter,1-leave)));}const reveal=scene>=0?Math.max(0,Math.min(1,(part-.35)/.16)):0;$('#case-art').style.setProperty('--scene-reveal',reduced?'1':String(reveal*reveal*(3-2*reveal)));$('#case-art').dataset.direction=scene%2?'right':'left';const inDetail=scene>=0&&part>.35&&$('#case-art-image').complete&&$('#case-art-image').naturalWidth>0;$('#case-art').setAttribute('aria-hidden',String(!inDetail));$('#case-art').classList.toggle('active',inDetail);$('#case-art').classList.toggle('colorful',inDetail&&part>.46);$('#stage').classList.toggle('detail-view',inDetail);const story=$('.scroll-story').getBoundingClientRect();$('#progress').style.width=Math.max(0,Math.min(100,-story.top/(story.height-innerHeight)*100))+'%'}
 function schedule(){if(!pending){pending=true;requestAnimationFrame(update)}}addEventListener('scroll',schedule,{passive:true});addEventListener('resize',()=>{layout();schedule()});new ResizeObserver(layout).observe($('#stage'));new ResizeObserver(layout).observe($('#story-card'));
 const endings=[
@@ -24,44 +24,3 @@ $('#case-art-image').addEventListener('load',schedule);update();
 
 // One entrance per visible block; content stays readable without animation.
 if(!reduced){const entranceObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('flow-arriving');entranceObserver.unobserve(entry.target);}},{threshold:.12});for(const node of document.querySelectorAll('.mobile-ending-scene .ending-card,.mobile-ending-image,.closing h1'))entranceObserver.observe(node);}
-
-
-/* Mobile story autoplay: each image and paragraph gets a reading pause; user input pauses it. */
-
-/* Mobile readers get a natural, continuous page with no text over the artwork. */
-if(matchMedia('(max-width:800px)').matches){
-  const flow=document.createElement('div');
-  flow.className='mobile-flow';
-  flow.id='mobile-flow';
-
-  const bridge=window.BRIDGE.split('\\n').map(line=>'<p>'+esc(line)+'</p>').join('');
-  const hero='<section class="mobile-flow-section mobile-flow-opening"><figure class="mobile-flow-art"><img src="assets/crosswalk-backs.png" alt="중국 도시 횡단보도의 사람들"><figcaption>AI 연출 이미지</figcaption></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">중국 대행 경제</span>'+bridge+'</div></section>';
-  const source='<section class="mobile-flow-section mobile-flow-source"><figure class="mobile-flow-art"><img src="assets/busy-daily-life.png" alt="바쁜 일상을 보내는 사람들"><figcaption>AI 연출 이미지</figcaption></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">왜 대행 서비스가 늘어날까</span><p>'+esc(window.SCMP_INTRO)+'</p><p class="mobile-flow-note">SCMP 보도를 바탕으로 대행 서비스를 살펴봅니다.</p></div></section>';
-  const assets=['meal','trash','lego','debate','care'];
-  const caseMarkup=cases.map((item,i)=>{
-    const paragraphs=(window.CONCERNS[i]?'<blockquote>'+esc(window.CONCERNS[i])+'</blockquote>':'')+
-      '<p>'+esc(window.INTROS[i]?.[1]||'')+'</p>'+
-      '<p>'+esc(item.desc||'')+'</p>'+
-      (item.extra?'<p class="mobile-flow-note">'+esc(item.extra)+'</p>':'');
-    const price=item.price?'<p class="mobile-flow-price">'+esc(item.price)+(item.won?' · '+esc(item.won):'')+'</p>':'';
-    const focusX=(2.25*item.x-62.5).toFixed(1),focusY=(1.882*item.y-44.1).toFixed(1);
-    return '<article class="mobile-flow-section mobile-flow-case"><figure class="mobile-flow-art mobile-flow-focus"><div class="mobile-crowd-focus" role="img" aria-label="횡단보도 군중 속 '+esc(item.name)+' 사례 인물을 한 명씩 확대" style="--focus-x-pos:'+focusX+'%;--focus-y-pos:'+focusY+'%;background-image:url(assets/crosswalk-backs.png)"><span class="mobile-focus-ring" aria-hidden="true"></span></div><figcaption>AI 연출 이미지</figcaption></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">'+String(i+1).padStart(2,'0')+' / 05</span><h2>'+esc(item.name)+'</h2>'+price+paragraphs+'</div><figure class="mobile-flow-art mobile-flow-case-art"><img src="assets/case-'+assets[i]+'.png" alt="'+esc(item.name)+' 대행 서비스 장면"><figcaption>AI 연출 이미지</figcaption></figure></article>';
-  }).join('');
-  flow.innerHTML=hero+source+caseMarkup;
-  const revealSections=[...flow.querySelectorAll('.mobile-flow-section'),...document.querySelectorAll('.mobile-ending-scene')];
-  const sectionObserver=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(!entry.isIntersecting)return;
-      revealSections.forEach(section=>section.classList.toggle('is-active',section===entry.target));
-    });
-  },{threshold:.2,rootMargin:'-12% 0px -28% 0px'});
-  revealSections.forEach(section=>sectionObserver.observe(section));
-  const copyObserver=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('is-visible');});
-  },{threshold:.18,rootMargin:'0px 0px -8% 0px'});
-  flow.querySelectorAll('.mobile-flow-copy > *').forEach(node=>copyObserver.observe(node));
-  const main=document.querySelector('main');
-  main.insertBefore(flow,main.firstChild);
-  const oldStory=document.querySelector('.scroll-story');
-  if(oldStory)oldStory.hidden=true;
-}
