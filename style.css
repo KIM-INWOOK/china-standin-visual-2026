@@ -149,3 +149,21 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
     line-height:1.68;
   }
 }
+
+
+/* Case copy clears the mobile browser controls and stays inside the visible scene. */
+@media(max-width:800px){
+  .story-card:not(.intro-panel):not(.bridge-card):not(.context-card){
+    bottom:clamp(140px,18svh,184px);
+    padding:16px 18px;
+  }
+  .story-card:not(.intro-panel):not(.bridge-card):not(.context-card) .narration{
+    font-size:16px;
+    line-height:1.65;
+  }
+  .story-card:not(.intro-panel):not(.bridge-card):not(.context-card) h2{
+    font-size:24px;
+    line-height:1.3;
+    margin:4px 0 10px;
+  }
+}
