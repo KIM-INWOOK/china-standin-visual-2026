@@ -69,3 +69,26 @@
     top:8px;right:12px;z-index:5;
   }
 }
+
+
+/* Mobile source copy sits on its own dark panel; the photo continues through the full scene. */
+@media(max-width:800px){
+  #stage.intro-view.source-view{background:#202326}
+  #stage.intro-view.source-view .daily-life-background img{
+    height:100%;object-fit:cover;object-position:center;opacity:.52;filter:grayscale(.35);
+  }
+  #stage.intro-view.source-view .daily-life-background:after{
+    background:linear-gradient(180deg,#11131855 0%,#11131866 45%,#11131844 100%);
+  }
+  #stage.intro-view.source-view .story-card.intro-panel{
+    top:calc(env(safe-area-inset-top,0px) + max(48px,7svh));
+    padding:14px 16px!important;background:#17191df2!important;
+    border:1px solid #ffffff25!important;border-radius:3px;
+    box-shadow:0 10px 28px #0005!important;color:#fff!important;
+  }
+  #stage.intro-view.source-view .story-card.intro-panel .intro-copy,
+  #stage.intro-view.source-view .story-card.intro-panel .intro-copy p{
+    color:#fff!important;text-shadow:none;
+  }
+  #stage.intro-view.source-view .story-card.intro-panel mark{color:#a9def1!important}
+}
