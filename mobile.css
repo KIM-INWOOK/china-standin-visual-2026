@@ -253,3 +253,16 @@
     padding-top:10px;
   }
 }
+
+
+/* Source narration cards must shrink to their copy; top+bottom insets stretched them to the viewport. */
+@media(max-width:800px) and (orientation:portrait){
+  #stage.intro-view.source-view .story-card.intro-panel{
+    bottom:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    display:block!important;
+    overflow:visible!important;
+  }
+}
