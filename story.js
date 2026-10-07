@@ -47,6 +47,18 @@ if(matchMedia('(max-width:800px)').matches){
     return '<article class="mobile-flow-section mobile-flow-case"><figure class="mobile-flow-art"><img src="assets/case-'+assets[i]+'.png" alt="'+esc(item.name)+' 대행 서비스 장면"></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">'+String(i+1).padStart(2,'0')+' / 05</span><h2>'+esc(item.name)+'</h2>'+price+paragraphs+'</div></article>';
   }).join('');
   flow.innerHTML=hero+source+caseMarkup;
+  const revealSections=[...flow.querySelectorAll('.mobile-flow-section')];
+  const sectionObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      revealSections.forEach(section=>section.classList.toggle('is-active',section===entry.target));
+    });
+  },{threshold:.2,rootMargin:'-12% 0px -28% 0px'});
+  revealSections.forEach(section=>sectionObserver.observe(section));
+  const copyObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('is-visible');});
+  },{threshold:.18,rootMargin:'0px 0px -8% 0px'});
+  flow.querySelectorAll('.mobile-flow-copy > *').forEach(node=>copyObserver.observe(node));
   const main=document.querySelector('main');
   main.insertBefore(flow,main.firstChild);
   const oldStory=document.querySelector('.scroll-story');
