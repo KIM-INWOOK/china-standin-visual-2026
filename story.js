@@ -44,7 +44,8 @@ if(matchMedia('(max-width:800px)').matches){
       '<p>'+esc(item.desc||'')+'</p>'+
       (item.extra?'<p class="mobile-flow-note">'+esc(item.extra)+'</p>':'');
     const price=item.price?'<p class="mobile-flow-price">'+esc(item.price)+(item.won?' · '+esc(item.won):'')+'</p>':'';
-    return '<article class="mobile-flow-section mobile-flow-case"><figure class="mobile-flow-art"><img src="assets/case-'+assets[i]+'.png" alt="'+esc(item.name)+' 대행 서비스 장면"><figcaption>AI 연출 이미지</figcaption></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">'+String(i+1).padStart(2,'0')+' / 05</span><h2>'+esc(item.name)+'</h2>'+price+paragraphs+'</div></article>';
+    const focusX=(2.25*item.x-62.5).toFixed(1),focusY=(1.882*item.y-44.1).toFixed(1);
+    return '<article class="mobile-flow-section mobile-flow-case"><figure class="mobile-flow-art mobile-flow-focus"><div class="mobile-crowd-focus" role="img" aria-label="횡단보도 군중 속 '+esc(item.name)+' 사례 인물을 한 명씩 확대" style="--focus-x-pos:'+focusX+'%;--focus-y-pos:'+focusY+'%;background-image:url(assets/crosswalk-backs.png)"><span class="mobile-focus-ring" aria-hidden="true"></span></div><figcaption>AI 연출 이미지</figcaption></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">'+String(i+1).padStart(2,'0')+' / 05</span><h2>'+esc(item.name)+'</h2>'+price+paragraphs+'</div><figure class="mobile-flow-art mobile-flow-case-art"><img src="assets/case-'+assets[i]+'.png" alt="'+esc(item.name)+' 대행 서비스 장면"><figcaption>AI 연출 이미지</figcaption></figure></article>';
   }).join('');
   flow.innerHTML=hero+source+caseMarkup;
   const revealSections=[...flow.querySelectorAll('.mobile-flow-section'),...document.querySelectorAll('.mobile-ending-scene')];
