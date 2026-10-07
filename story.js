@@ -35,8 +35,8 @@ if(matchMedia('(max-width:800px)').matches){
   flow.id='mobile-flow';
 
   const bridge=window.BRIDGE.split('\\n').map(line=>'<p>'+esc(line)+'</p>').join('');
-  const hero='<section class="mobile-flow-section mobile-flow-opening"><figure class="mobile-flow-art"><img src="assets/crosswalk-backs.png" alt="중국 도시 횡단보도의 사람들"></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">중국 대행 경제</span>'+bridge+'</div></section>';
-  const source='<section class="mobile-flow-section mobile-flow-source"><figure class="mobile-flow-art"><img src="assets/busy-daily-life.png" alt="바쁜 일상을 보내는 사람들"></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">왜 대행 서비스가 늘어날까</span><p>'+esc(window.SCMP_INTRO)+'</p><p class="mobile-flow-note">SCMP 보도를 바탕으로 대행 서비스를 살펴봅니다.</p></div></section>';
+  const hero='<section class="mobile-flow-section mobile-flow-opening"><figure class="mobile-flow-art"><img src="assets/crosswalk-backs.png" alt="중국 도시 횡단보도의 사람들"><figcaption>AI 연출 이미지</figcaption></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">중국 대행 경제</span>'+bridge+'</div></section>';
+  const source='<section class="mobile-flow-section mobile-flow-source"><figure class="mobile-flow-art"><img src="assets/busy-daily-life.png" alt="바쁜 일상을 보내는 사람들"><figcaption>AI 연출 이미지</figcaption></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">왜 대행 서비스가 늘어날까</span><p>'+esc(window.SCMP_INTRO)+'</p><p class="mobile-flow-note">SCMP 보도를 바탕으로 대행 서비스를 살펴봅니다.</p></div></section>';
   const assets=['meal','trash','lego','debate','care'];
   const caseMarkup=cases.map((item,i)=>{
     const paragraphs=(window.CONCERNS[i]?'<blockquote>'+esc(window.CONCERNS[i])+'</blockquote>':'')+
@@ -44,10 +44,10 @@ if(matchMedia('(max-width:800px)').matches){
       '<p>'+esc(item.desc||'')+'</p>'+
       (item.extra?'<p class="mobile-flow-note">'+esc(item.extra)+'</p>':'');
     const price=item.price?'<p class="mobile-flow-price">'+esc(item.price)+(item.won?' · '+esc(item.won):'')+'</p>':'';
-    return '<article class="mobile-flow-section mobile-flow-case"><figure class="mobile-flow-art"><img src="assets/case-'+assets[i]+'.png" alt="'+esc(item.name)+' 대행 서비스 장면"></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">'+String(i+1).padStart(2,'0')+' / 05</span><h2>'+esc(item.name)+'</h2>'+price+paragraphs+'</div></article>';
+    return '<article class="mobile-flow-section mobile-flow-case"><figure class="mobile-flow-art"><img src="assets/case-'+assets[i]+'.png" alt="'+esc(item.name)+' 대행 서비스 장면"><figcaption>AI 연출 이미지</figcaption></figure><div class="mobile-flow-copy"><span class="mobile-flow-kicker">'+String(i+1).padStart(2,'0')+' / 05</span><h2>'+esc(item.name)+'</h2>'+price+paragraphs+'</div></article>';
   }).join('');
   flow.innerHTML=hero+source+caseMarkup;
-  const revealSections=[...flow.querySelectorAll('.mobile-flow-section')];
+  const revealSections=[...flow.querySelectorAll('.mobile-flow-section'),...document.querySelectorAll('.mobile-ending-scene')];
   const sectionObserver=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(!entry.isIntersecting)return;
