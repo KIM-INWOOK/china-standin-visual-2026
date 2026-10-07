@@ -191,3 +191,38 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
 }
 .mobile-autoplay-toggle:focus-visible{outline:3px solid #68a8c2;outline-offset:2px}
 @media(min-width:801px){.mobile-autoplay-toggle{display:none}}
+
+
+/* Mobile safe frame: keep every case paragraph above the browser's bottom bar. */
+@media(max-width:800px){
+  .story-stage{height:100dvh;height:100svh}
+  #stage[data-scene="0"] #case-art,#stage[data-scene="1"] #case-art,#stage[data-scene="2"] #case-art,#stage[data-scene="3"] #case-art,#stage[data-scene="4"] #case-art{
+    top:47svh;left:0;right:0;bottom:auto;width:100%;height:30svh!important;
+    padding:4px 14px;display:flex;align-items:center;justify-content:center;
+  }
+  #stage[data-scene="0"] #case-art img,#stage[data-scene="1"] #case-art img,#stage[data-scene="2"] #case-art img,#stage[data-scene="3"] #case-art img,#stage[data-scene="4"] #case-art img{
+    width:100%;height:100%;max-height:100%;object-fit:contain;object-position:center;
+  }
+  #stage[data-scene="0"] #story-card,#stage[data-scene="1"] #story-card,#stage[data-scene="2"] #story-card,#stage[data-scene="3"] #story-card,#stage[data-scene="4"] #story-card{
+    left:50%;right:auto;top:5svh;bottom:auto;width:min(calc(100% - 28px),620px);
+    max-height:39svh;overflow:visible;padding:12px 16px;
+    display:flex;flex-direction:column;justify-content:center;align-items:stretch;
+    transform:translateX(-50%);text-align:center;
+    background:#ffffffed;border:1px solid #ffffffcc;box-shadow:0 8px 24px #14253416;
+  }
+  #stage[data-scene="0"] #story-card .narration,#stage[data-scene="1"] #story-card .narration,#stage[data-scene="2"] #story-card .narration,#stage[data-scene="3"] #story-card .narration,#stage[data-scene="4"] #story-card .narration{
+    margin:0;font-size:clamp(13px,3.8vw,15px);line-height:1.48;overflow-wrap:anywhere;
+  }
+  #stage[data-scene="0"] #story-card h2,#stage[data-scene="1"] #story-card h2,#stage[data-scene="2"] #story-card h2,#stage[data-scene="3"] #story-card h2,#stage[data-scene="4"] #story-card h2{
+    margin:0;font-size:clamp(20px,5.4vw,23px);line-height:1.4;
+  }
+  .mobile-ending-scene{padding-bottom:calc(220px + env(safe-area-inset-bottom))}
+  .mobile-ending-scene .ending-card{padding:30px 24px 24px}
+  .mobile-ending-scene .ending-card p{font-size:17px;line-height:1.72;margin:0 0 18px}
+  .mobile-ending-scene .ending-card blockquote{font-size:19px;line-height:1.7}
+}
+@media(max-width:800px) and (max-height:680px){
+  #stage[data-scene="0"] #case-art,#stage[data-scene="1"] #case-art,#stage[data-scene="2"] #case-art,#stage[data-scene="3"] #case-art,#stage[data-scene="4"] #case-art{top:49svh;height:27svh!important}
+  #stage[data-scene="0"] #story-card,#stage[data-scene="1"] #story-card,#stage[data-scene="2"] #story-card,#stage[data-scene="3"] #story-card,#stage[data-scene="4"] #story-card{top:4svh;max-height:42svh;padding:10px 13px}
+  #stage[data-scene="0"] #story-card .narration,#stage[data-scene="1"] #story-card .narration,#stage[data-scene="2"] #story-card .narration,#stage[data-scene="3"] #story-card .narration,#stage[data-scene="4"] #story-card .narration{font-size:12.5px;line-height:1.42}
+}
