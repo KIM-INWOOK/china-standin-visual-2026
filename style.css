@@ -283,3 +283,16 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
   .mobile-flow-art{flex-direction:column}
   .mobile-flow-art figcaption{align-self:flex-end;padding:5px 8px 2px;color:#687687;font:11px/1.4 Pretendard,Arial,sans-serif}
 }
+
+/* Keep the original one-person-at-a-time zoom in the mobile scroll story. */
+@media(max-width:800px){
+  .mobile-flow-focus{position:relative;height:clamp(240px,48svh,420px);min-height:0;aspect-ratio:16/10;padding:0;overflow:hidden}
+  .mobile-crowd-focus{position:absolute;inset:0;background-size:cover;background-position:var(--focus-x-pos) var(--focus-y-pos);filter:grayscale(1) brightness(.78);transition:background-size 1.25s cubic-bezier(.2,.65,.2,1),filter .9s ease}
+  .mobile-flow-section.is-active .mobile-crowd-focus{background-size:180% auto;filter:grayscale(0) brightness(1)}
+  .mobile-focus-ring{position:absolute;left:50%;top:50%;width:clamp(54px,17vw,78px);aspect-ratio:1;transform:translate(-50%,-50%);border:1px solid #ffffffef;border-radius:50%;box-shadow:0 0 0 9px #ffffff24;opacity:.9}
+  .mobile-flow-focus figcaption{position:absolute;right:18px;bottom:15px;z-index:1;background:#ffffffdf;padding:5px 8px}
+  .mobile-flow-case-art{width:min(100%,760px);height:auto;aspect-ratio:3/2;min-height:0;padding:0;background:transparent}
+  .mobile-flow-case-art img{width:100%;height:100%;max-height:none;object-fit:contain}
+  .mobile-flow-case-art figcaption{align-self:flex-end;padding:5px 8px 2px;color:#687687;font:11px/1.4 Pretendard,Arial,sans-serif}
+}
+@media(prefers-reduced-motion:reduce){.mobile-crowd-focus{transition:none!important}}
