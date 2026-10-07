@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import worker from '../worker/index.js';
+const rows=[];
+const env={DB:{prepare(sql){return {all:async()=>({results:[...rows].reverse()}),bind(id,task,price,created_at){return {run:async()=>{rows.push({id,task,price,created_at});}}}}}},ASSETS:{fetch:async()=>new Response('static')}};
+const url='https://test.example/api/opinions';
+const post=data=>new Request(url,{method:'POST',headers:{'Origin':'https://test.example'},body:JSON.stringify(data)});
+assert.equal((await worker.fetch(post({task:'집밥 준비',price:10000}),env)).status,201);
+const read=await (await worker.fetch(new Request(url),env)).json();
+assert.equal(read.opinions[0].task,'집밥 준비');assert.equal(read.opinions[0].price,10000);
+assert.equal((await worker.fetch(post({task:'',price:1}),env)).status,400);
+assert.equal((await worker.fetch(post({task:'test',price:-1}),env)).status,400);
+assert.equal((await worker.fetch(new Request(url,{method:'POST',headers:{Origin:'https://other.example'},body:'{}'}),env)).status,403);
+assert.equal(await (await worker.fetch(new Request('https://test.example/'),env)).text(),'static');
+console.log('댓글 저장·조회·입력 검증 통과');
