@@ -5,7 +5,7 @@ function focus(i,phase=0){if(i===current&&phase===currentPhase)return;const chan
 // Mobile composition follows the selected person, illustration and copy length.
 const mobileCaseParts=cases.map(c=>{const sentences=c.desc.match(/[^.!?]+[.!?]?/g)||[c.desc];const parts=[];let part='';for(const sentence of sentences){if(part&&part.length+sentence.length>145){parts.push(part.trim());part='';}part+=sentence;}if(part)parts.push(part.trim());return parts;});
 const mobilePeople=[{x:54.5,y:49,z:1.03},{x:32,y:36,z:1.14},{x:43.5,y:35,z:1.08},{x:87,y:44,z:1.02},{x:67,y:37,z:1.08}];
-function mobileFrame(){const phone=screen.width<=800;const height=Math.min(innerHeight,phone?screen.height-160:innerHeight);return Math.max(430,height);}
+function mobileFrame(){const phone=screen.width<=800;const height=Math.min(innerHeight,phone?screen.height:innerHeight);return Math.max(430,height);}
 function layout(){const stage=$('#stage'),w=stage.clientWidth,mobile=w<=800,art=$('#case-art'),card=$('#story-card');
  if(mobile)document.documentElement.style.setProperty('--mobile-stage-height',mobileFrame()+'px');
  const h=stage.clientHeight,scale=Math.max(w/1536,h/1024),iw=1536*scale,ih=1024*scale;
