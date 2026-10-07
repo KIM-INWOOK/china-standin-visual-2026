@@ -278,3 +278,8 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
 @media(prefers-reduced-motion:reduce){
   .mobile-flow-art img,.mobile-flow-copy>*,.mobile-ending-scene .mobile-ending-image{transition:none;transform:none;opacity:1}
 }
+
+@media(max-width:800px){
+  .mobile-flow-art{flex-direction:column}
+  .mobile-flow-art figcaption{align-self:flex-end;padding:5px 8px 2px;color:#687687;font:11px/1.4 Pretendard,Arial,sans-serif}
+}
