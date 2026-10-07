@@ -98,7 +98,7 @@
 @media(max-width:800px) and (orientation:portrait){
   #stage.intro-view.source-view .daily-life-background{
     inset:0 0 auto!important;
-    height:min(calc(100vw * 2 / 3),38svh)!important;
+    height:min(66.67vw,38svh)!important;
     max-height:none!important;overflow:hidden;background:#e8edf1;
   }
   #stage.intro-view.source-view .daily-life-background img{
