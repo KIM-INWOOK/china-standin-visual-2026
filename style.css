@@ -226,3 +226,12 @@ html.has-closing-motion .chore-cloud{will-change:opacity,filter}
   #stage[data-scene="0"] #story-card,#stage[data-scene="1"] #story-card,#stage[data-scene="2"] #story-card,#stage[data-scene="3"] #story-card,#stage[data-scene="4"] #story-card{top:4svh;max-height:42svh;padding:10px 13px}
   #stage[data-scene="0"] #story-card .narration,#stage[data-scene="1"] #story-card .narration,#stage[data-scene="2"] #story-card .narration,#stage[data-scene="3"] #story-card .narration,#stage[data-scene="4"] #story-card .narration{font-size:12.5px;line-height:1.42}
 }
+
+/* Keep the playback control separate from the image credit and the reading panel. */
+@media(max-width:800px){
+  .mobile-autoplay-toggle{left:12px;right:auto}
+  #stage[data-scene="0"] #story-card,#stage[data-scene="1"] #story-card,#stage[data-scene="2"] #story-card,#stage[data-scene="3"] #story-card,#stage[data-scene="4"] #story-card{top:8svh;max-height:36svh}
+}
+@media(max-width:800px) and (max-height:680px){
+  #stage[data-scene="0"] #story-card,#stage[data-scene="1"] #story-card,#stage[data-scene="2"] #story-card,#stage[data-scene="3"] #story-card,#stage[data-scene="4"] #story-card{top:7svh;max-height:39svh}
+}
